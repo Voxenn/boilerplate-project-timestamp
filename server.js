@@ -25,7 +25,7 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date?", (req, res) => {
-    let currentTime = new Date.now();
+    let currentTime = Date.now();
     if(req.params.date instanceof Date && isNaN(req.params.date)) {
         let date = new Date(req.params.date);
     } else {
