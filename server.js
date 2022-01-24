@@ -24,9 +24,9 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date?", (req, res) => {
-    let currentTime = Date.now();
-    if(req.params.date instanceof Date && isNaN(req.params.date)) {
+app.get("/api/:date", (req, res) => {
+    let currentTime = new Date();
+    if(req.params.date instanceof Date && !isNaN(req.params.date)) {
         let date = new Date(req.params.date);
     } else {
         return res.json({
@@ -34,7 +34,7 @@ app.get("/api/:date?", (req, res) => {
                 });
     };
     return res.json({
-                "unix": date === '' || date === undefined ? currentTime : date,
+                "unix": date === '' || date === undefined ? currentTime.getTime() : date,
                 "utc": date === '' || date === undefined ? currentTime.toUTCString : date.toUTCString()
     });
 });
