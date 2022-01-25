@@ -24,26 +24,25 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:timestamp", (req, res) => {
-    let timestamp = req.params.timestamp;
-    let date = new Date(timestamp);
-    res.json({
-                "unix": timestamp,
-                "utc": date
-    });
-});
+app.get("/api/:date?", (req, res) => {
+    let date;
+    if(!req.params.date) {
+        date = new Date();
+        return res.json({
+            "unix": date.getTime();
+            "utc" : date.toUTCString();
+        });
+    }
 
-app.get("/api/:date", (req, res) => {
-    let currentTime = new Date();
-    let date = new Date(req.params.date);
+    date = !isNaN(req.params.date) ? new Date(Number(req.params.date)) : new Date(req.params.date);
     if(date.toString() === 'Invalid Date') {
         return res.json({
                     "error": "Invalid Date"
                 });
     };
     return res.json({
-                "unix": date === '' || date === undefined ? currentTime.getTime() : date,
-                "utc": date === '' || date === undefined ? currentTime.toUTCString : date.toUTCString()
+                "unix": date.getTime(),
+                "utc": date.toUTCString()
     });
 });
 
