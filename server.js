@@ -29,8 +29,8 @@ app.get("/api/:date?", (req, res) => {
     if(!req.params.date) {
         date = new Date();
         return res.json({
-            "unix": date.getTime();
-            "utc" : date.toUTCString();
+            "unix": date.getTime(),
+            "utc" : date.toUTCString()
         });
     }
 
